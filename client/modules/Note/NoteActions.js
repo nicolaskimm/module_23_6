@@ -1,5 +1,4 @@
 import callApi from '../../util/apiCaller';
-import uuid from 'uuid';
 
 // Export Constants
 export const CREATE_NOTE = 'CREATE_NOTE';
@@ -14,16 +13,14 @@ export function createNote(note, laneId) {
     type: CREATE_NOTE,
     laneId,
     note: {
-      id: uuid(),
       task: 'new note',
-      ...note,
     },
   };
 }
 
 export function createNoteRequest(note, laneId) {
   return (dispatch) => {
-    return callApi('notes', 'post', { id: uuid(), note, laneId }).then(noteResp => {
+    return callApi('notes', 'post', { note, laneId }).then(noteResp => {
       dispatch(createNote(noteResp, laneId));
     });
   };
@@ -61,7 +58,7 @@ export function updateNote(note) {
 
 export function updateNoteRequest(note, noteId) {
   return (dispatch) => {
-    return callApi(`notes/${noteId}`, 'put', note).then(() => {
+    return callApi(`notes/${noteId}`, 'put', { id: note.id, task: note.task }).then(() => {
       dispatch(updateNote(note));
     });
   };
@@ -70,7 +67,7 @@ export function updateNoteRequest(note, noteId) {
 export function editNote(noteId) {
   return {
     type: EDIT_NOTE,
-    noteId,
+    id: noteId,
   };
 }
 

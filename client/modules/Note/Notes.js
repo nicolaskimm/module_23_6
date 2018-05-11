@@ -11,6 +11,7 @@ const Notes = ({ notes, laneId, editNote, updateNote, deleteNote }) => {
       key={note.id}
       editing={note.editing}
       task={note.task}
+      laneId={laneId}
     >
       <Edit
         editing={note.editing}
@@ -33,6 +34,7 @@ Notes.propTypes = {
   editNote: PropTypes.func,
   updateNote: PropTypes.func,
   deleteNote: PropTypes.func,
+  editing: PropTypes.bool,
 };
 
 export default Notes;

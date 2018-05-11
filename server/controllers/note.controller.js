@@ -1,5 +1,7 @@
 import Note from '../models/note';
 import Lane from '../models/lane';
+import uuid from 'uuid';
+
 
 export function addNote(req, res) {
   const { note, laneId } = req.body;
@@ -12,6 +14,7 @@ export function addNote(req, res) {
     task: note.task,
   });
 
+  newNote.id = uuid();
   newNote.save((err, saved) => {
     if (err) {
       res.status(500).send(err);
@@ -48,9 +51,8 @@ export function deleteNote(req, res) {
           res.status(500).send(err2);
         }
         lane.notes.pull(note);
-        lane.save();
+        return lane.save();
       });
-      res.status(200).send(note);
     } else {
       res.status(500).send(err);
     }
@@ -58,7 +60,7 @@ export function deleteNote(req, res) {
 }
 
 export function updateNote(req, res) {
-  Note.update({ id: req.params.noteId }, req.body.note).exec((err, note) => {
+  Note.update({ id: req.params.noteId }, { task: req.body.task }, { new: true }).exec((err, note) => {
     if (err) {
       res.status(500).send(err);
     }

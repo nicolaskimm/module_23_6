@@ -24,7 +24,6 @@ Kanban.need = [() => { return fetchLanes(); }];
 Kanban.propTypes = {
   lanes: PropTypes.array,
   createLane: PropTypes.func,
-  createLaneRequest: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
