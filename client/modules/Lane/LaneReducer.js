@@ -14,9 +14,8 @@ export default function lanes(state = initialState, action) {
       return { ...state, [action.lane.id]: action.lane };
 
     case EDIT_LANE: {
-      return {
-        data: state.data.map(lane => { return lane.id === action.id ? Object.assign({}, lane, action.post) : lane; }),
-      };
+      const lane = { ...state[action.id], editing: true };
+      return { ...state, [action.id]: lane };
     }
 
     case CREATE_LANES:

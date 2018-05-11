@@ -20,7 +20,7 @@ const Lane = (props) => {
           className={styles.LaneName}
           editing={lane.editing}
           value={lane.name}
-          onValueClick={() => editLane(lane.id)}
+          onValueClick={() => editLane(laneId)}
           onUpdate={name => updateLane({ ...lane, name, editing: false })}
         />
         <div className={styles.LaneDelete}>
@@ -42,6 +42,8 @@ Lane.propTypes = {
   updateLane: PropTypes.func,
   deleteLane: PropTypes.func,
   editLane: PropTypes.func,
+  editing: PropTypes.bool,
 };
+
 
 export default Lane;

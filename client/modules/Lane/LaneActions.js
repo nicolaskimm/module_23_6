@@ -2,7 +2,7 @@ import callApi from '../../util/apiCaller';
 import { normalize } from 'normalizr';
 import { lanes } from '../../util/schema';
 import { createNotes } from '../Note/NoteActions';
-import uuid from 'uuid';
+// import uuid from 'uuid';
 
 // Export Constants
 export const CREATE_LANE = 'CREATE_LANE';
@@ -16,8 +16,7 @@ export function createLane(lane) {
   return {
     type: CREATE_LANE,
     lane: {
-      id: uuid(),
-      notes: [],
+      name: 'new lane',
       ...lane,
     },
   };
@@ -62,7 +61,7 @@ export function updateLane(lane) {
 
 export function updateLaneRequest(lane, laneId) {
   return (dispatch) => {
-    return callApi(`lanes/${laneId}`, 'put', lane).then(() => {
+    return callApi(`lanes/${laneId}`, 'put', { id: lane.id, name: lane.name }).then(() => {
       dispatch(updateLane(lane));
     });
   };
@@ -71,7 +70,7 @@ export function updateLaneRequest(lane, laneId) {
 export function editLane(laneId) {
   return {
     type: EDIT_LANE,
-    laneId,
+    id: laneId,
   };
 }
 

@@ -23,7 +23,7 @@ export function createNote(note, laneId) {
 
 export function createNoteRequest(note, laneId) {
   return (dispatch) => {
-    return callApi('notes', 'post', { note, laneId }).then(noteResp => {
+    return callApi('notes', 'post', { id: uuid(), note, laneId }).then(noteResp => {
       dispatch(createNote(noteResp, laneId));
     });
   };

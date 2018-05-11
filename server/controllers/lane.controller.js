@@ -1,5 +1,6 @@
 import Lane from '../models/lane';
 import Note from '../models/note';
+import uuid from 'uuid';
 
 export function addLane(req, res) {
   if (!req.body.name) {
@@ -9,6 +10,8 @@ export function addLane(req, res) {
   const newLane = new Lane(req.body);
 
   newLane.notes = [];
+  newLane.id = uuid();
+
   newLane.save((err, saved) => {
     if (err) {
       res.status(500).send(err);
